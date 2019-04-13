@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="AffittaCamereType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="WebStateless_ASPNETCORE_ENVIRONMENT" DefaultValue="" />
+    <Parameter Name="WebStateless_InstanceCount" DefaultValue="-1" />
+  </Parameters>
+  <!-- Importa ServiceManifest da ServicePackage. ServiceManifestName e ServiceManifestVersion 
+       devono corrispondere agli attributi Name e Version dell'elemento ServiceManifest 
+       definito nel file ServiceManifest.xml. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="WebStatelessPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[WebStateless_ASPNETCORE_ENVIRONMENT]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <DefaultServices>
+    <!-- Nella sezione seguente vengono create istanze di tipi di servizio durante la creazione
+         di un'istanza di questo tipo di applicazione. È anche possibile creare una o più istanze del tipo di servizio
+         con il modulo ServiceFabric di PowerShell.
+         
+         L'attributo ServiceTypeName seguente deve corrispondere al nome definito nel file ServiceManifest.xml importato. -->
+    <Service Name="WebStateless" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="WebStatelessType" InstanceCount="[WebStateless_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+  </DefaultServices>
+</ApplicationManifest>
