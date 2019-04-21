@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>AC.DataAccess</AssemblyName>
+    <RootNamespace>AffittaCamere.DataAccess</RootNamespace>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Contexts\" />
+    <Folder Include="Impl\" />
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
+</Project>
