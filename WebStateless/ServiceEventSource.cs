@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Services.Runtime;
 
-namespace WebStateless
+namespace AffittaCamere.WebStateless
 {
     [EventSource(Name = "MyCompany-AffittaCamere-WebStateless")]
     internal sealed class ServiceEventSource : EventSource

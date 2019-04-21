@@ -1,12 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="AffittaCamereType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
+    <Parameter Name="RestApiStateless_ASPNETCORE_ENVIRONMENT" DefaultValue="" />
+    <Parameter Name="RestApiStateless_InstanceCount" DefaultValue="-1" />
     <Parameter Name="WebStateless_ASPNETCORE_ENVIRONMENT" DefaultValue="" />
     <Parameter Name="WebStateless_InstanceCount" DefaultValue="-1" />
   </Parameters>
   <!-- Importa ServiceManifest da ServicePackage. ServiceManifestName e ServiceManifestVersion 
        devono corrispondere agli attributi Name e Version dell'elemento ServiceManifest 
        definito nel file ServiceManifest.xml. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="RestApiStatelessPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[RestApiStateless_ASPNETCORE_ENVIRONMENT]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="WebStatelessPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides />
@@ -20,6 +29,11 @@
          con il modulo ServiceFabric di PowerShell.
          
          L'attributo ServiceTypeName seguente deve corrispondere al nome definito nel file ServiceManifest.xml importato. -->
+    <Service Name="RestApiStateless" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="RestApiStatelessType" InstanceCount="[RestApiStateless_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
     <Service Name="WebStateless" ServicePackageActivationMode="ExclusiveProcess">
       <StatelessService ServiceTypeName="WebStatelessType" InstanceCount="[WebStateless_InstanceCount]">
         <SingletonPartition />

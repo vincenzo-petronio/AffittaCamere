@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WebStateless
+namespace AffittaCamere.WebStateless
 {
     internal static class Program
     {

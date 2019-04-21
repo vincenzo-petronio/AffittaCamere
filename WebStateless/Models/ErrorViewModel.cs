@@ -1,6 +1,6 @@
 using System;
 
-namespace WebStateless.Models
+namespace AffittaCamere.WebStateless.Models
 {
     public class ErrorViewModel
     {

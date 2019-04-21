@@ -12,7 +12,7 @@ using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Microsoft.ServiceFabric.Data;
 
-namespace WebStateless
+namespace AffittaCamere.WebStateless
 {
     /// <summary>
     /// FabricRuntime crea un'istanza di questa classe per ogni istanza del tipo di servizio. 
