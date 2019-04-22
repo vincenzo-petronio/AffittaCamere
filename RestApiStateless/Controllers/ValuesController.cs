@@ -7,6 +7,7 @@ using AffittaCamere.RestApiStateless.Helpers;
 using AffittaCamere.WebStateless.DTO;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AffittaCamere.RestApiStateless.Controllers

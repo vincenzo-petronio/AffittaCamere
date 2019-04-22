@@ -1,8 +1,8 @@
-﻿using AffittaCamere.RestApiStateless.Helpers;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +10,8 @@ namespace AffittaCamere.RestApiStateless
 {
     public class Startup
     {
+        private readonly string CorsAllowDefaultOrigin = "CorsAllowDefaultOrigin";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -20,7 +22,28 @@ namespace AffittaCamere.RestApiStateless
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // For CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsAllowDefaultOrigin, builder =>
+                {
+                    builder
+                        .WithOrigins(
+                            "http://localhost:9110"
+                        )
+                        //.AllowAnyOrigin()
+                    ;
+                });
+            });
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory(CorsAllowDefaultOrigin));
+
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
+            // For AutoMapper
             services.AddAutoMapper();
         }
 
@@ -32,6 +55,7 @@ namespace AffittaCamere.RestApiStateless
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(CorsAllowDefaultOrigin);
             app.UseMvc();
         }
     }
