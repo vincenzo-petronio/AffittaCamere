@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "AffittaCamere", "AffittaCamere\AffittaCamere.sfproj", "{706ADB23-7513-4FAF-969A-D841FD385D5F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStateless", "WebStateless\WebStateless.csproj", "{C4978BD2-7EE2-456B-BFBD-581DDD6CFFBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStateless", "Services\WebStateless\WebStateless.csproj", "{C4978BD2-7EE2-456B-BFBD-581DDD6CFFBC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiStateless", "RestApiStateless\RestApiStateless.csproj", "{DC1B7CEB-9559-4FA4-ACF0-157EC77326D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiStateless", "Services\RestApiStateless\RestApiStateless.csproj", "{DC1B7CEB-9559-4FA4-ACF0-157EC77326D8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B71F7841-53D4-44E9-B427-FE77A6A376D0}"
 EndProject

@@ -32,8 +32,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RestApiStateless\RestApiStateless.csproj" />
-    <ProjectReference Include="..\WebStateless\WebStateless.csproj" />
+    <ProjectReference Include="..\Services\RestApiStateless\RestApiStateless.csproj" />
+    <ProjectReference Include="..\Services\WebStateless\WebStateless.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <PropertyGroup>
