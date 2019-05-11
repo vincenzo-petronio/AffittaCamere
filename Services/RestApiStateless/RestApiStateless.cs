@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Fabric;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
-using Microsoft.ServiceFabric.Data;
+using System.Collections.Generic;
+using System.Fabric;
+using System.IO;
 
 namespace AffittaCamere.RestApiStateless
 {
@@ -22,7 +17,7 @@ namespace AffittaCamere.RestApiStateless
         public RestApiStateless(StatelessServiceContext context)
             : base(context)
         { }
-
+        
         /// <summary>
         /// Override facoltativo per creare listener (come TCP, HTTP) per questa istanza del servizio.
         /// </summary>
@@ -49,5 +44,13 @@ namespace AffittaCamere.RestApiStateless
                     }))
             };
         }
+
+
+        // N.B. L'override di RunAsync in questo caso non è necessario. 
+        // Il RunAsync è necessario per fare operazioni long-running. 
+        // Su Service Fabric è possibile ignorare il RunAsync e 
+        // continuare ad accettare e gestire le richieste del client 
+        // attraverso il communication listener.
+
     }
 }

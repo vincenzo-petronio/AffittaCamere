@@ -7,8 +7,8 @@
     <div class="col-md-6">
         <h2>Rooms</h2>
 
-        <input id="btnGetAll" type="button" title="Get All" onclick="GetAllCars()" />
-        <table id="tableAllCars" class="table">
+        <input id="btnGetAll" type="button" value="Get All" onclick="GetAllRooms()" />
+        <table id="tableAllRooms" class="table">
             <thead>
                 <tr>
                     <th>
@@ -30,17 +30,17 @@
 
 @section Scripts {
     <script type="text/javascript">
-        function GetAllCars() {
+        function GetAllRooms() {
             $.ajax({
                 type: "GET",
-                url: "http://localhost:9120/api/Values", //URI
+                url: "http://localhost:9120/api/Rooms", //URI
                 dataType: "json",
                 success: function (data) {
                     var myJsonObject = data;
                     contentType: "application/json";
-                    $("#tableAllCars").empty();
+                    $("#tableAllRooms").empty();
                     $.each(myJsonObject, function (i, eachObj) {
-                        $("#tableAllCars").append('<tr><td width="50px">' + eachObj + '</td></tr>');
+                        $("#tableAllRooms").append('<tr><td width="50px">' + eachObj + '</td></tr>');
                     });
 
                 },

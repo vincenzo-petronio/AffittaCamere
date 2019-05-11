@@ -14,11 +14,11 @@ namespace AffittaCamere.RestApiStateless.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class RoomsController : ControllerBase
     {
         private readonly IMapper mapper;
 
-        public ValuesController(IMapper mapper)
+        public RoomsController(IMapper mapper)
         {
             this.mapper = mapper;
         }
