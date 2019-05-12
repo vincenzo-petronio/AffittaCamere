@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace AffittaCamere.RoomsService.Interfaces
 {
-    public class RoomsServiceProxy : IRoomsServiceProxy
-    {
-        public Task<bool> AddOrUpdateRoomAsync(RoomData room, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+    //public class RoomsServiceProxy : IRoomsServiceProxy
+    //{
+    //    public Task<bool> AddOrUpdateRoomAsync(RoomData room, CancellationToken cancellationToken)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public Task<IEnumerable<RoomData>> GetAllRoomsAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    //    public Task<IEnumerable<RoomData>> GetAllRoomsAsync(CancellationToken cancellationToken)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AffittaCamere.DataAccess.Entities;
-using AffittaCamere.RestApiStateless.Helpers;
+﻿using AffittaCamere.RoomsService.Interfaces;
 using AffittaCamere.WebStateless.DTO;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.ServiceFabric.Services.Remoting.Client;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AffittaCamere.RestApiStateless.Controllers
 {
@@ -25,27 +25,16 @@ namespace AffittaCamere.RestApiStateless.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            var rooms = new List<Room> ()
-            {
-                new Room()
-                {
-                    Name = "Room A"
-                },
-                new Room()
-                {
-                    Name = "Room B"
-                }
-            };
 
-            var queryRooms = rooms.AsQueryable();
+            IRoomsService roomsServiceClient = ServiceProxy.Create<IRoomsService>(new Uri("fabric:/AffittaCamere/RoomsService"));
+            var result = await roomsServiceClient.GetAllRoomsAsync(default(CancellationToken));
 
-            var dtos = queryRooms
-                .ProjectTo<RoomDTO>(mapper.ConfigurationProvider)
-                .ToList()
-                ;
-
+            var dtos = result.AsQueryable()
+            .ProjectTo<RoomDTO>(mapper.ConfigurationProvider)
+            .ToList()
+            ;
             var dtosToStrings = dtos.Select(r => r.Name);
 
             return dtosToStrings.ToArray();

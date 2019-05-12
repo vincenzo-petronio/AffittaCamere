@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="fabric:/AffittaCamere" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
+    <Parameter Name="RoomsService_InstanceCount" Value="1" />
     <Parameter Name="RestApiStateless_ASPNETCORE_ENVIRONMENT" Value="Development" />
     <Parameter Name="RestApiStateless_InstanceCount" Value="1" />
     <Parameter Name="WebStateless_ASPNETCORE_ENVIRONMENT" Value="Development" />

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace AffittaCamere.RoomsService.Interfaces
 {
-    interface IRoomService : IService
+    public interface IRoomsService : IService
     {
-        Task<IEnumerable<RoomData>> GetAllRoomsAsync(CancellationToken cancellationToken);
+        Task<List<RoomData>> GetAllRoomsAsync(CancellationToken cancellationToken);
 
         Task<bool> AddOrUpdateRoomAsync(RoomData room, CancellationToken cancellationToken);
     }

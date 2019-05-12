@@ -19,6 +19,7 @@ Per configurare NuGet con il proxy:
     ```
 # Params
 [GUI = localhost:9110](http://localhost:9110/)
+[RestAPI = localhost:9120](http://localhost:9120/)
 
 
 # Build and Test
