@@ -27,8 +27,9 @@ namespace AffittaCamere.RestApiStateless.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-
-            IRoomsService roomsServiceClient = ServiceProxy.Create<IRoomsService>(new Uri("fabric:/AffittaCamere/RoomsService"));
+            IRoomsService roomsServiceClient = ServiceProxy.Create<IRoomsService>(
+                new Uri("fabric:/AffittaCamere/RoomsStateful")
+                ,new Microsoft.ServiceFabric.Services.Client.ServicePartitionKey(0));
             var result = await roomsServiceClient.GetAllRoomsAsync(default(CancellationToken));
 
             var dtos = result.AsQueryable()

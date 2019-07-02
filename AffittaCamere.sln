@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomsService.Interfaces", "Interfaces\RoomsService.Interfaces\RoomsService.Interfaces.csproj", "{0A535682-2BB2-486A-88EB-0F302AE42435}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsService", "Services\RoomsService\RoomsService.csproj", "{3C36BFF1-8E70-4CCF-AC13-1B1E422AD8C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomsService", "Services\RoomsService\RoomsService.csproj", "{3C36BFF1-8E70-4CCF-AC13-1B1E422AD8C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsStateful", "Services\RoomsStateful\RoomsStateful.csproj", "{1C94523E-8E76-4F24-A8B7-7EEBB1328B01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,14 @@ Global
 		{3C36BFF1-8E70-4CCF-AC13-1B1E422AD8C6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3C36BFF1-8E70-4CCF-AC13-1B1E422AD8C6}.Release|x64.ActiveCfg = Release|Any CPU
 		{3C36BFF1-8E70-4CCF-AC13-1B1E422AD8C6}.Release|x64.Build.0 = Release|Any CPU
+		{1C94523E-8E76-4F24-A8B7-7EEBB1328B01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C94523E-8E76-4F24-A8B7-7EEBB1328B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C94523E-8E76-4F24-A8B7-7EEBB1328B01}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1C94523E-8E76-4F24-A8B7-7EEBB1328B01}.Debug|x64.Build.0 = Debug|Any CPU
+		{1C94523E-8E76-4F24-A8B7-7EEBB1328B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C94523E-8E76-4F24-A8B7-7EEBB1328B01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C94523E-8E76-4F24-A8B7-7EEBB1328B01}.Release|x64.ActiveCfg = Release|Any CPU
+		{1C94523E-8E76-4F24-A8B7-7EEBB1328B01}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

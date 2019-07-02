@@ -8,7 +8,7 @@ using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RoomsService
+namespace AffittaCamere.RoomsService
 {
     /// <summary>
     /// Il runtime di Service Fabric crea un'istanza di questa classe per ogni istanza del servizio.

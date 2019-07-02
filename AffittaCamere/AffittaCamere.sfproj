@@ -34,6 +34,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Services\RestApiStateless\RestApiStateless.csproj" />
     <ProjectReference Include="..\Services\RoomsService\RoomsService.csproj" />
+    <ProjectReference Include="..\Services\RoomsStateful\RoomsStateful.csproj" />
     <ProjectReference Include="..\Services\WebStateless\WebStateless.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />

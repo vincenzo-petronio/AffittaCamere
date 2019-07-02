@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Services.Runtime;
 
-namespace AffittaCamere.RoomsService
+namespace AffittaCamere.RoomsStateful
 {
     internal static class Program
     {
@@ -21,10 +20,10 @@ namespace AffittaCamere.RoomsService
                 // Quando Service Fabric crea un'istanza di questo tipo di servizio,
                 // nel processo host viene creata un'istanza della classe.
 
-                ServiceRuntime.RegisterServiceAsync("RoomsServiceType",
-                    context => new RoomsService(context)).GetAwaiter().GetResult();
+                ServiceRuntime.RegisterServiceAsync("RoomsStatefulType",
+                    context => new RoomsStateful(context)).GetAwaiter().GetResult();
 
-                ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(RoomsService).Name);
+                ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(RoomsStateful).Name);
 
                 // Impedisce che questo processo host venga terminato in modo che i servizi rimangano in esecuzione.
                 Thread.Sleep(Timeout.Infinite);
