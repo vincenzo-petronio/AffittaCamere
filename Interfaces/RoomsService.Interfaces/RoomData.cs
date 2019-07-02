@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace AffittaCamere.RoomsService.Interfaces
 {
@@ -10,9 +11,15 @@ namespace AffittaCamere.RoomsService.Interfaces
         }
 
         [DataMember(IsRequired = true, Order = 1)]
-        public string Name { get; set; }
+        public Guid Id { get; set; }
 
         [DataMember(IsRequired = true, Order = 2)]
+        public string Name { get; set; }
+
+        [DataMember(IsRequired = true, Order = 3)]
         public bool IsAvailable { get; set; }
+
+        [DataMember(IsRequired = true, Order = 4)]
+        public int Number { get; set; }
     }
 }

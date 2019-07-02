@@ -9,6 +9,6 @@ namespace AffittaCamere.RoomsService.Interfaces
     {
         Task<List<RoomData>> GetAllRoomsAsync(CancellationToken cancellationToken);
 
-        Task<bool> AddOrUpdateRoomAsync(RoomData room, CancellationToken cancellationToken);
+        Task AddOrUpdateRoomAsync(RoomData room, CancellationToken cancellationToken);
     }
 }

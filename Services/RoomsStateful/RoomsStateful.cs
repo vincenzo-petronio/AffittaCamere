@@ -17,16 +17,23 @@ namespace AffittaCamere.RoomsStateful
     internal sealed class RoomsStateful : StatefulService, IRoomsService
     {
         private const string RoomsDictionaryKeyName = "roomsDictionaryKeyName";
-        private IReliableDictionary<string, RoomData> roomsDictionary;
-
+        private IReliableDictionary<Guid, RoomData> roomsDictionary;
 
         public RoomsStateful(StatefulServiceContext context)
             : base(context)
         { }
 
-        public async Task<bool> AddOrUpdateRoomAsync(RoomData room, CancellationToken cancellationToken)
+        #region [ Impl Interfaces ]
+
+        public async Task AddOrUpdateRoomAsync(RoomData room, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            //roomsDictionary = await StateManager.GetOrAddAsync<IReliableDictionary<Guid, RoomData>>(RoomsDictionaryKeyName);
+
+            using (var tx = this.StateManager.CreateTransaction())
+            {
+                await roomsDictionary.AddOrUpdateAsync(tx, room.Id , room, (id, value) => room);
+                await tx.CommitAsync();
+            }
         }
 
         public async Task<List<RoomData>> GetAllRoomsAsync(CancellationToken cancellationToken)
@@ -45,6 +52,8 @@ namespace AffittaCamere.RoomsStateful
             }
             return roomsResult;
         }
+
+        #endregion
 
         /// <summary>
         /// Override facoltativo per creare listener (ad esempio HTTP, servizio remoto, WCF e così via) per consentire a questa replica del servizio di gestire richieste client o utente.
@@ -72,11 +81,9 @@ namespace AffittaCamere.RoomsStateful
         /// <param name="cancellationToken">Annullato quando Service Fabric deve arrestare questa replica del servizio.</param>
         protected override async Task RunAsync(CancellationToken cancellationToken)
         {
-            this.roomsDictionary = await this.StateManager.GetOrAddAsync<IReliableDictionary<string, RoomData>>(RoomsDictionaryKeyName);
+            this.roomsDictionary = await this.StateManager.GetOrAddAsync<IReliableDictionary<Guid, RoomData>>(RoomsDictionaryKeyName);
 
             var partition = (Int64RangePartitionInformation)this.Partition.PartitionInfo;
-
-
 
             while (true)
             {

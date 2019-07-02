@@ -1,4 +1,5 @@
-﻿using AffittaCamere.RoomsService.Interfaces;
+﻿using AffittaCamere.RestApiStateless.Models;
+using AffittaCamere.RoomsService.Interfaces;
 using AffittaCamere.WebStateless.DTO;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -17,20 +18,24 @@ namespace AffittaCamere.RestApiStateless.Controllers
     public class RoomsController : ControllerBase
     {
         private readonly IMapper mapper;
+        private readonly IRoomsService roomsService;
 
         public RoomsController(IMapper mapper)
         {
             this.mapper = mapper;
+            roomsService = ServiceProxy.Create<IRoomsService>(
+                new Uri("fabric:/AffittaCamere/RoomsStateful")
+                ,new Microsoft.ServiceFabric.Services.Client.ServicePartitionKey(0));
         }
 
-        // GET api/values
+        // GET api/rooms
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            IRoomsService roomsServiceClient = ServiceProxy.Create<IRoomsService>(
-                new Uri("fabric:/AffittaCamere/RoomsStateful")
-                ,new Microsoft.ServiceFabric.Services.Client.ServicePartitionKey(0));
-            var result = await roomsServiceClient.GetAllRoomsAsync(default(CancellationToken));
+            //IRoomsService roomsServiceClient = ServiceProxy.Create<IRoomsService>(
+            //    new Uri("fabric:/AffittaCamere/RoomsStateful")
+            //    ,new Microsoft.ServiceFabric.Services.Client.ServicePartitionKey(0));
+            var result = await roomsService.GetAllRoomsAsync(default(CancellationToken));
 
             var dtos = result.AsQueryable()
             .ProjectTo<RoomDTO>(mapper.ConfigurationProvider)
@@ -41,26 +46,35 @@ namespace AffittaCamere.RestApiStateless.Controllers
             return dtosToStrings.ToArray();
         }
 
-        // GET api/values/5
+        // GET api/rooms/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
             return "value";
         }
 
-        // POST api/values
+        // POST api/rooms
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task Post([FromBody] RoomRequest roomRequest)
         {
+            RoomData room = new RoomData()
+            {
+                Id = Guid.NewGuid(),
+                Name = roomRequest.Name,
+                IsAvailable = true,
+                Number = roomRequest.Number
+            };
+
+            await roomsService.AddOrUpdateRoomAsync(room, default(CancellationToken));
         }
 
-        // PUT api/values/5
+        // PUT api/rooms/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/values/5
+        // DELETE api/rooms/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

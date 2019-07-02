@@ -57,7 +57,7 @@ namespace AffittaCamere.RoomsService
 
         #region [ Impl Interfaces ]
 
-        public async Task<bool> AddOrUpdateRoomAsync(RoomData room, CancellationToken cancellationToken)
+        public async Task AddOrUpdateRoomAsync(RoomData room, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
