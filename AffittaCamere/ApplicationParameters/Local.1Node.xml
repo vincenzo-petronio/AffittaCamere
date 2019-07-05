@@ -9,5 +9,8 @@
     <Parameter Name="RestApiStateless_InstanceCount" Value="1" />
     <Parameter Name="WebStateless_ASPNETCORE_ENVIRONMENT" Value="Development" />
     <Parameter Name="WebStateless_InstanceCount" Value="1" />
+    <Parameter Name="RoomActorService_PartitionCount" Value="1" />
+    <Parameter Name="RoomActorService_TargetReplicaSetSize" Value="1" />
+    <Parameter Name="RoomActorService_MinReplicaSetSize" Value="1" />
   </Parameters>
 </Application>

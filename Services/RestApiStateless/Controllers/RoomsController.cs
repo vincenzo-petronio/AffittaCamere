@@ -23,25 +23,23 @@ namespace AffittaCamere.RestApiStateless.Controllers
         public RoomsController(IMapper mapper)
         {
             this.mapper = mapper;
+
             roomsService = ServiceProxy.Create<IRoomsService>(
                 new Uri("fabric:/AffittaCamere/RoomsStateful")
-                ,new Microsoft.ServiceFabric.Services.Client.ServicePartitionKey(0));
+                , new Microsoft.ServiceFabric.Services.Client.ServicePartitionKey(0));
         }
 
         // GET api/rooms
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            //IRoomsService roomsServiceClient = ServiceProxy.Create<IRoomsService>(
-            //    new Uri("fabric:/AffittaCamere/RoomsStateful")
-            //    ,new Microsoft.ServiceFabric.Services.Client.ServicePartitionKey(0));
             var result = await roomsService.GetAllRoomsAsync(default(CancellationToken));
 
             var dtos = result.AsQueryable()
             .ProjectTo<RoomDTO>(mapper.ConfigurationProvider)
             .ToList()
             ;
-            var dtosToStrings = dtos.Select(r => r.Name);
+            var dtosToStrings = dtos.Select(r => "#" + r.Number + " " + r.Name + " - " + r.IsAvailable);
 
             return dtosToStrings.ToArray();
         }

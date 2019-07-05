@@ -1,4 +1,4 @@
-﻿using AffittaCamere.DataAccess.Entities;
+﻿using AffittaCamere.RoomsService.Interfaces;
 using AffittaCamere.WebStateless.DTO;
 using AutoMapper;
 
@@ -8,11 +8,10 @@ namespace AffittaCamere.RestApiStateless.Helpers.AutoMapperProfiles
     {
         public WebProfile()
         {
-            CreateMap<Room, RoomDTO>()
-                //.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            CreateMap<RoomData, RoomDTO>()
+                .ForMember(dest => dest.IsAvailable, opt => opt.MapFrom(src => src.IsAvailable ? "Free" : "Busy"))
                 .ReverseMap()
                 ;
-            //CreateMap<RoomDTO, Room>();
         }
     }
 }

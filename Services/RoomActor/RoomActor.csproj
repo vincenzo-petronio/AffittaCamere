@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,18 +7,20 @@
     <ServerGarbageCollection>True</ServerGarbageCollection>
     <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
     <TargetLatestRuntimePatch>False</TargetLatestRuntimePatch>
-    <AssemblyName>AC.RoomsStateful</AssemblyName>
-    <RootNamespace>AffittaCamere.RoomsStateful</RootNamespace>
+    <UpdateServiceFabricManifestEnabled>True</UpdateServiceFabricManifestEnabled>
+    <ServicePackagePath>PackageRoot</ServicePackagePath>
+    <ServicePackagePrefix>$(MSBuildProjectName)</ServicePackagePrefix>
+    <FabActUtilWorkingDir>$(BaseIntermediateOutputPath)\FabActUtilTemp</FabActUtilWorkingDir>
+    <AssemblyName>AC.RoomActor</AssemblyName>
+    <RootNamespace>AffittaCamere.RoomActor</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="3.2.187" />
-    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.2.187" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Interfaces\RoomsService.Interfaces\RoomsService.Interfaces.csproj" />
     <ProjectReference Include="..\RoomActor.Interfaces\RoomActor.Interfaces.csproj" />
   </ItemGroup>
 

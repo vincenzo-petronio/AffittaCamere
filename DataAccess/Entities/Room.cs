@@ -9,5 +9,6 @@ namespace AffittaCamere.DataAccess.Entities
         public Guid Id { get; set; }
         public String Name { get; set; }
         public int Number { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

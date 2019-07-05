@@ -9,6 +9,7 @@
     <TargetLatestRuntimePatch>False</TargetLatestRuntimePatch>
     <AssemblyName>AC.RoomsService</AssemblyName>
     <RootNamespace>AffittaCamere.RoomsService</RootNamespace>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

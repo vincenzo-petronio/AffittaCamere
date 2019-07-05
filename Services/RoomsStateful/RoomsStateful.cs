@@ -1,4 +1,7 @@
-﻿using AffittaCamere.RoomsService.Interfaces;
+﻿using AffittaCamere.RoomActor.Interfaces;
+using AffittaCamere.RoomsService.Interfaces;
+using Microsoft.ServiceFabric.Actors;
+using Microsoft.ServiceFabric.Actors.Client;
 using Microsoft.ServiceFabric.Data.Collections;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.Runtime;
@@ -23,17 +26,33 @@ namespace AffittaCamere.RoomsStateful
             : base(context)
         { }
 
+
         #region [ Impl Interfaces ]
 
         public async Task AddOrUpdateRoomAsync(RoomData room, CancellationToken cancellationToken)
         {
-            //roomsDictionary = await StateManager.GetOrAddAsync<IReliableDictionary<Guid, RoomData>>(RoomsDictionaryKeyName);
-
             using (var tx = this.StateManager.CreateTransaction())
             {
-                await roomsDictionary.AddOrUpdateAsync(tx, room.Id , room, (id, value) => room);
+                await roomsDictionary.AddOrUpdateAsync(tx, room.Id, room, (id, value) => room);
                 await tx.CommitAsync();
             }
+
+            try
+            {
+                var roomActor = ActorProxy.Create<IRoomActor>(new ActorId(room.Number), new Uri("fabric:/AffittaCamere/RoomActorService"));
+
+                RoomInfo roomInfo = new RoomInfo()
+                {
+                    Number = room.Number,
+                    Reserved = !room.IsAvailable
+                };
+                await roomActor.UpdateRoomInfoAsync(roomInfo, cancellationToken);
+            }
+            catch (Exception e)
+            {
+
+            }
+
         }
 
         public async Task<List<RoomData>> GetAllRoomsAsync(CancellationToken cancellationToken)
@@ -50,6 +69,20 @@ namespace AffittaCamere.RoomsStateful
 
                 await tx.CommitAsync();
             }
+
+            foreach (RoomData r in roomsResult)
+            {
+                try
+                {
+                    var roomActor = ActorProxy.Create<IRoomActor>(new ActorId(r.Number), new Uri("fabric:/AffittaCamere/RoomActorService"));
+                    var info = await roomActor.GetRoomInfoAsync(cancellationToken);
+                    r.IsAvailable = info == null ? false : !info.Reserved;
+                }
+                catch (Exception e)
+                {
+                }
+            }
+
             return roomsResult;
         }
 
