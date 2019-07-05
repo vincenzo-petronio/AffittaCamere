@@ -10,5 +10,7 @@ namespace AffittaCamere.RoomsService.Interfaces
         Task<List<RoomData>> GetAllRoomsAsync(CancellationToken cancellationToken);
 
         Task AddOrUpdateRoomAsync(RoomData room, CancellationToken cancellationToken);
+
+        Task ReserveOrReleaseRoom(int roomNumber, bool reserve, CancellationToken cancellationToken);
     }
 }

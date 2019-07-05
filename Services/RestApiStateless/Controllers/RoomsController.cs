@@ -67,9 +67,10 @@ namespace AffittaCamere.RestApiStateless.Controllers
         }
 
         // PUT api/rooms/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{number}")]
+        public async void Put(int number, [FromBody] bool reserve)
         {
+            await roomsService.ReserveOrReleaseRoom(number, reserve, default(CancellationToken));
         }
 
         // DELETE api/rooms/5

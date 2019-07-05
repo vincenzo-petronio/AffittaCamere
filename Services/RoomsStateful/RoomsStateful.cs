@@ -48,7 +48,7 @@ namespace AffittaCamere.RoomsStateful
                 };
                 await roomActor.UpdateRoomInfoAsync(roomInfo, cancellationToken);
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
             }
@@ -78,12 +78,33 @@ namespace AffittaCamere.RoomsStateful
                     var info = await roomActor.GetRoomInfoAsync(cancellationToken);
                     r.IsAvailable = info == null ? false : !info.Reserved;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                 }
             }
 
             return roomsResult;
+        }
+
+        public async Task ReserveOrReleaseRoom(int roomNumber, bool reserve, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var roomActor = ActorProxy.Create<IRoomActor>(new ActorId(roomNumber), new Uri("fabric:/AffittaCamere/RoomActorService"));
+                var info = await roomActor.GetRoomInfoAsync(cancellationToken);
+                info.Reserved = reserve;
+
+                RoomInfo roomInfo = new RoomInfo()
+                {
+                    Number = roomNumber,
+                    Reserved = reserve
+                };
+                await roomActor.UpdateRoomInfoAsync(roomInfo, cancellationToken);
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         #endregion

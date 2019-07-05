@@ -74,6 +74,13 @@ namespace AffittaCamere.RoomsService
 
         }
 
+        public Task ReserveOrReleaseRoom(int roomNumber, bool reserve, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
         #endregion
     }
 }
