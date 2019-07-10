@@ -60,6 +60,9 @@ namespace AffittaCamere.RoomActor
         {
             if (roomInfo == null) throw new ArgumentNullException();
 
+            // N.B. In alcune situazioni una best-practices è salvare ogni proprietà con una key diversa, così da non dover
+            // riscrivere tutto l'oggetto per ogni proprietà da cambiare.
+
             return this.StateManager.SetStateAsync<RoomInfo>(RoomInfoKeyName, roomInfo,cancellationToken);
         }
 
