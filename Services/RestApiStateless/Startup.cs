@@ -31,9 +31,11 @@ namespace AffittaCamere.RestApiStateless
                 {
                     builder
                         .WithOrigins(
-                            "http://localhost:9110"
+                            "http://localhost:9110", "http://localhost:9120"
                         )
-                        //.AllowAnyOrigin()
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
                     ;
                 });
             });

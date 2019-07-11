@@ -91,8 +91,6 @@ namespace AffittaCamere.RoomsStateful
             try
             {
                 var roomActor = ActorProxy.Create<IRoomActor>(new ActorId(roomNumber), new Uri("fabric:/AffittaCamere/RoomActorService"));
-                var info = await roomActor.GetRoomInfoAsync(cancellationToken);
-                info.Reserved = reserve;
 
                 RoomInfo roomInfo = new RoomInfo()
                 {
