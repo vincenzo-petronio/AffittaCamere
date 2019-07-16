@@ -39,7 +39,7 @@ namespace AffittaCamere.RestApiStateless.Controllers
             .ProjectTo<RoomDTO>(mapper.ConfigurationProvider)
             .ToList()
             ;
-            var dtosToStrings = dtos.Select(r => "#" + r.Number + " " + r.Name + " - " + r.IsAvailable);
+            var dtosToStrings = dtos.Select(r => "#" + r.Number + " " + r.Name + " - " + r.IsAvailable + " - " + r.User);
 
             return dtosToStrings.ToArray();
         }
@@ -67,10 +67,10 @@ namespace AffittaCamere.RestApiStateless.Controllers
         }
 
         // PUT api/rooms/5
-        [HttpPut("{number}")]
-        public async void Put(int number, [FromBody] bool reserve)
+        [HttpPut("{number}/{user}")]
+        public async void Put(int number, string user, [FromBody] bool reserve)
         {
-            await roomsService.ReserveOrReleaseRoom(number, reserve, default(CancellationToken));
+            await roomsService.ReserveOrReleaseRoom(number, reserve, user, default(CancellationToken));
         }
 
         // DELETE api/rooms/5

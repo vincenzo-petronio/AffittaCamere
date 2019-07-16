@@ -10,5 +10,8 @@ namespace AffittaCamere.RoomActor.Interfaces
 
         [DataMember]
         public bool Reserved { get; set; }
+
+        [DataMember]
+        public string User { get; set; }
     }
 }

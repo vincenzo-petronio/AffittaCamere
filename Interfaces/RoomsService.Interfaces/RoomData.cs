@@ -21,5 +21,8 @@ namespace AffittaCamere.RoomsService.Interfaces
 
         [DataMember(IsRequired = true, Order = 4)]
         public int Number { get; set; }
+
+        [DataMember(IsRequired = true, Order = 5)]
+        public string User { get; set; }
     }
 }

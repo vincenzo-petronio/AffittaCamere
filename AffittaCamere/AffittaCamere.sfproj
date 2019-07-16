@@ -36,6 +36,7 @@
     <ProjectReference Include="..\Services\RoomActor\RoomActor.csproj" />
     <ProjectReference Include="..\Services\RoomsService\RoomsService.csproj" />
     <ProjectReference Include="..\Services\RoomsStateful\RoomsStateful.csproj" />
+    <ProjectReference Include="..\Services\UserActor\UserActor.csproj" />
     <ProjectReference Include="..\Services\WebStateless\WebStateless.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />

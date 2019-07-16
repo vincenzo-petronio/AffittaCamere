@@ -1,14 +1,11 @@
-﻿using AffittaCamere.RoomActor.Interfaces;
-using AffittaCamere.UserActor.Interfaces;
+﻿using AffittaCamere.UserActor.Interfaces;
 using Microsoft.ServiceFabric.Actors;
-using Microsoft.ServiceFabric.Actors.Client;
 using Microsoft.ServiceFabric.Actors.Runtime;
-using System;
-using System.Fabric;
+using Microsoft.ServiceFabric.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AffittaCamere.RoomActor
+namespace AffittaCamere.UserActor
 {
     /// <remarks>
     /// Questa classe rappresenta un actor.
@@ -19,16 +16,16 @@ namespace AffittaCamere.RoomActor
     ///  - None: lo stato viene mantenuto solo in memoria e non viene replicato.
     /// </remarks>
     [StatePersistence(StatePersistence.Persisted)]
-    internal class RoomActor : Actor, IRoomActor
+    internal class UserActor : Actor, IUserActor
     {
-        private const string RoomInfoKeyName = "RoomInfoKeyName";
+        private const string NumberRoomKeyName = "NumberRoomKeyName";
 
         /// <summary>
-        /// Inizializza una nuova istanza di RoomActor
+        /// Inizializza una nuova istanza di UserActor
         /// </summary>
         /// <param name="actorService">Elemento Microsoft.ServiceFabric.Actors.Runtime.ActorService che ospiterà questa istanza dell'attore.</param>
         /// <param name="actorId">Elemento Microsoft.ServiceFabric.Actors.ActorId per questa istanza dell'attore.</param>
-        public RoomActor(ActorService actorService, ActorId actorId)
+        public UserActor(ActorService actorService, ActorId actorId)
             : base(actorService, actorId)
         {
         }
@@ -49,37 +46,25 @@ namespace AffittaCamere.RoomActor
             return Task.CompletedTask;
         }
 
-
         #region [ Impl Interfaces ]
 
-        public async Task<RoomInfo> GetRoomInfoAsync(CancellationToken cancellationToken)
+        public Task SetRoomReservedAsync(int roomNumber, CancellationToken cancellationToken)
         {
-            var roomInfoFromState = await this.StateManager.TryGetStateAsync<RoomInfo>(RoomInfoKeyName, cancellationToken);
-
-            return roomInfoFromState.HasValue ? roomInfoFromState.Value : null;
+            return this.StateManager.SetStateAsync(NumberRoomKeyName, roomNumber, cancellationToken);
         }
 
-        public async Task UpdateRoomInfoAsync(RoomInfo roomInfo, CancellationToken cancellationToken)
+        public async Task<bool> CanReserve(CancellationToken cancellationToken)
         {
-            if (roomInfo == null) throw new ArgumentNullException();
-
-            // N.B. In alcune situazioni una best-practices è salvare ogni proprietà con una key diversa, così da non dover
-            // riscrivere tutto l'oggetto per ogni proprietà da cambiare.
-            
-            var userActorProxy = ActorProxy.Create<IUserActor>(new ActorId(roomInfo.User), new Uri("fabric:/AffittaCamere/UserActorService"));
-            if (roomInfo.Reserved)
-            {
-                await userActorProxy.SetRoomReservedAsync(roomInfo.Number, cancellationToken);
-                await this.StateManager.SetStateAsync<RoomInfo>(RoomInfoKeyName, roomInfo, cancellationToken);
-            }
-            else
-            {
-                await userActorProxy.UnsetRoomReservedAsync(cancellationToken);
-                roomInfo.User = string.Empty;
-                await this.StateManager.SetStateAsync<RoomInfo>(RoomInfoKeyName, roomInfo, cancellationToken);
-            }
-
+            ConditionalValue<int> val = await this.StateManager.TryGetStateAsync<int>(NumberRoomKeyName, cancellationToken);
+            return val.HasValue;
         }
+
+        public Task UnsetRoomReservedAsync(CancellationToken cancellationToken)
+        {
+            return this.StateManager.TryRemoveStateAsync(NumberRoomKeyName, cancellationToken);
+        }
+
+
 
         #endregion
     }

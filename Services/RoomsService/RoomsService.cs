@@ -74,7 +74,7 @@ namespace AffittaCamere.RoomsService
 
         }
 
-        public Task ReserveOrReleaseRoom(int roomNumber, bool reserve, CancellationToken cancellationToken)
+        public Task ReserveOrReleaseRoom(int roomNumber, bool reserve, string user, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

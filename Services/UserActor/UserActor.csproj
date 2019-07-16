@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -11,8 +11,8 @@
     <ServicePackagePath>PackageRoot</ServicePackagePath>
     <ServicePackagePrefix>$(MSBuildProjectName)</ServicePackagePrefix>
     <FabActUtilWorkingDir>$(BaseIntermediateOutputPath)\FabActUtilTemp</FabActUtilWorkingDir>
-    <AssemblyName>AC.RoomActor</AssemblyName>
-    <RootNamespace>AffittaCamere.RoomActor</RootNamespace>
+    <RootNamespace>AffittaCamere.UserActor</RootNamespace>
+    <AssemblyName>AC.UserActor</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RoomActor.Interfaces\RoomActor.Interfaces.csproj" />
     <ProjectReference Include="..\UserActor.Interfaces\UserActor.Interfaces.csproj" />
   </ItemGroup>
 

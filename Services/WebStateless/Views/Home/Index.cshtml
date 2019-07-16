@@ -25,6 +25,7 @@
     <div class="col-md-6">
         <h2>Reserve/Release</h2>
 
+        <input id="txtUser" type="tel" placeholder="user" />
         <input id="txtIdRoom" type="text" placeholder="# room number" />
         <button id="btnReserve" onclick="ReserveRoom('true')">Reserve</button>
         <button id="btnRelease" onclick="ReserveRoom('false')">Release</button>
@@ -55,7 +56,7 @@
         function ReserveRoom(reserved) {
             $.ajax({
                 method: "PUT",
-                url: "http://localhost:9120/api/rooms/" + $('#txtIdRoom').val(), //URI
+                url: "http://localhost:9120/api/rooms/" + $('#txtIdRoom').val() + "/" + $('#txtUser').val(), //URI
                 processData: false,
                 contentType: "application/json",
                 crossDomain: true,

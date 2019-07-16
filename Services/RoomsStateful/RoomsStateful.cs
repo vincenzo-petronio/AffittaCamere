@@ -41,12 +41,12 @@ namespace AffittaCamere.RoomsStateful
             {
                 var roomActor = ActorProxy.Create<IRoomActor>(new ActorId(room.Number), new Uri("fabric:/AffittaCamere/RoomActorService"));
 
-                RoomInfo roomInfo = new RoomInfo()
-                {
-                    Number = room.Number,
-                    Reserved = !room.IsAvailable
-                };
-                await roomActor.UpdateRoomInfoAsync(roomInfo, cancellationToken);
+                //RoomInfo roomInfo = new RoomInfo()
+                //{
+                //    Number = room.Number,
+                //    Reserved = !room.IsAvailable
+                //};
+                //await roomActor.UpdateRoomInfoAsync(roomInfo, cancellationToken);
             }
             catch (Exception)
             {
@@ -76,7 +76,8 @@ namespace AffittaCamere.RoomsStateful
                 {
                     var roomActor = ActorProxy.Create<IRoomActor>(new ActorId(r.Number), new Uri("fabric:/AffittaCamere/RoomActorService"));
                     var info = await roomActor.GetRoomInfoAsync(cancellationToken);
-                    r.IsAvailable = info == null ? false : !info.Reserved;
+                    r.IsAvailable = info == null ? true : !info.Reserved;
+                    r.User = info == null ? string.Empty : info.User;
                 }
                 catch (Exception)
                 {
@@ -86,7 +87,7 @@ namespace AffittaCamere.RoomsStateful
             return roomsResult;
         }
 
-        public async Task ReserveOrReleaseRoom(int roomNumber, bool reserve, CancellationToken cancellationToken)
+        public async Task ReserveOrReleaseRoom(int roomNumber, bool reserve, string user, CancellationToken cancellationToken)
         {
             try
             {
@@ -95,7 +96,8 @@ namespace AffittaCamere.RoomsStateful
                 RoomInfo roomInfo = new RoomInfo()
                 {
                     Number = roomNumber,
-                    Reserved = reserve
+                    Reserved = reserve,
+                    User = user
                 };
                 await roomActor.UpdateRoomInfoAsync(roomInfo, cancellationToken);
             }

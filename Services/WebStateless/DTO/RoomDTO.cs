@@ -4,8 +4,10 @@
     {
         public string Name { get; set; }
 
-        public int Number { get; set; } 
+        public int Number { get; set; }
 
         public string IsAvailable { get; set; }
+
+        public string User { get; set; }
     }
 }
