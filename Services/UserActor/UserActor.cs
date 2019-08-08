@@ -2,6 +2,7 @@
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using Microsoft.ServiceFabric.Data;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,6 +20,8 @@ namespace AffittaCamere.UserActor
     internal class UserActor : Actor, IUserActor
     {
         private const string NumberRoomKeyName = "NumberRoomKeyName";
+        private const string TimeLeftKeyName = "TimeLeftKeyName";
+        private IActorTimer actorTimer;
 
         /// <summary>
         /// Inizializza una nuova istanza di UserActor
@@ -46,11 +49,43 @@ namespace AffittaCamere.UserActor
             return Task.CompletedTask;
         }
 
+        protected override Task OnDeactivateAsync()
+        {
+            if (actorTimer != null)
+            {
+                UnregisterTimer(actorTimer);
+            }
+
+            return base.OnDeactivateAsync();
+        }
+
+        private async Task SetExpiration(object state)
+        {
+            ConditionalValue<int> dateTimeLeft = await this.StateManager.TryGetStateAsync<int>(TimeLeftKeyName, default(CancellationToken));
+            if (dateTimeLeft.HasValue)
+            {
+                int after = dateTimeLeft.Value - 1;
+                await this.StateManager.SetStateAsync(TimeLeftKeyName, after, default(CancellationToken));
+            }
+            else
+            {
+                await this.StateManager.SetStateAsync(TimeLeftKeyName, 1440, default(CancellationToken)); // 24hh = 1440 mm
+            }
+        }
+
         #region [ Impl Interfaces ]
 
         public Task SetRoomReservedAsync(int roomNumber, CancellationToken cancellationToken)
         {
+            actorTimer = this.RegisterTimer(SetExpiration, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(60));
+
             return this.StateManager.SetStateAsync(NumberRoomKeyName, roomNumber, cancellationToken);
+        }
+
+        public Task UnsetRoomReservedAsync(CancellationToken cancellationToken)
+        {
+            this.StateManager.RemoveStateAsync(TimeLeftKeyName, cancellationToken);
+            return this.StateManager.TryRemoveStateAsync(NumberRoomKeyName, cancellationToken);
         }
 
         public async Task<bool> CanReserve(CancellationToken cancellationToken)
@@ -59,12 +94,11 @@ namespace AffittaCamere.UserActor
             return val.HasValue;
         }
 
-        public Task UnsetRoomReservedAsync(CancellationToken cancellationToken)
+        public async Task<int> TimeToDeparture(CancellationToken cancellationToken)
         {
-            return this.StateManager.TryRemoveStateAsync(NumberRoomKeyName, cancellationToken);
+            ConditionalValue<int> dateTimeLeft = await this.StateManager.TryGetStateAsync<int>(TimeLeftKeyName, default(CancellationToken));
+            return dateTimeLeft.Value;
         }
-
-
 
         #endregion
     }

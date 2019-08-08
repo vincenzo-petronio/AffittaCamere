@@ -29,6 +29,7 @@
         <input id="txtIdRoom" type="text" placeholder="# room number" />
         <button id="btnReserve" onclick="ReserveRoom('true')">Reserve</button>
         <button id="btnRelease" onclick="ReserveRoom('false')">Release</button>
+        <text id="txtTimeLeft"></text><button id="btnTimeLeft" onclick="UpdateTimer()">Refresh</button>
     </div>
 
 </div>
@@ -75,6 +76,30 @@
                 console.log('ALWAYS');
             });
         };
+        function UpdateTimer() {
+            $.ajax({
+                method: "GET",
+                url: "http://localhost:9120/api/users/" + "/" + $('#txtUser').val() + "/timeleft", //URI
+                processData: false,
+                contentType: "application/json",
+                crossDomain: true,
+                data: reserved,
+                success: function (data) {
+                    var myJsonObject = data;
+                    contentType: "application/json";
+                    $("#txtTimeLeft").text(myJsonObject);
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                }
+            }).done(function () {
+                console.log('SUCCESS');
+            }).fail(function (msg) {
+                console.log('FAIL');
+            }).always(function (msg) {
+                console.log('ALWAYS');
+            });
+        }
     </script>
 }
 

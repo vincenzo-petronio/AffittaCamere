@@ -1,6 +1,7 @@
 ﻿using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Remoting.FabricTransport;
 using Microsoft.ServiceFabric.Services.Remoting;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,5 +29,7 @@ namespace AffittaCamere.UserActor.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<bool> CanReserve(CancellationToken cancellationToken);
+
+        Task<int> TimeToDeparture(CancellationToken cancellationToken);
     }
 }
